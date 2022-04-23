@@ -1,6 +1,5 @@
 package ru.netology.classes;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,6 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.netology.classes.Parsers.jsonToList;
+import static ru.netology.classes.Parsers.listToJson;
+
 class ParsersTest {
 
     @Test
@@ -18,15 +23,33 @@ class ParsersTest {
         List<Employee> expected = new ArrayList<>();
         expected.add(new Employee(1, "John", "Smith", "USA", 25));
 
-        List<Employee> result = Parsers.jsonToList(json);
+        List<Employee> result = jsonToList(json);
 
-        Assertions.assertEquals(expected, result);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void testJsonToListByHamcrest() {
+        String json = "[{\"id\":1,\"firstName\":\"John\",\"lastName\":\"Smith\",\"country\":\"USA\",\"age\":25}]";
+        List<Employee> expected = new ArrayList<>();
+        expected.add(new Employee(1, "John", "Smith", "USA", 25));
+
+        List<Employee> result = jsonToList(json);
+
+        assertThat(expected, equalTo(result));
     }
 
     @ParameterizedTest
     @MethodSource("getArgumentsForTest")
     void testListToJson(List<Employee> listEmployee, String jsonExpected) {
-        Assertions.assertEquals(jsonExpected, Parsers.listToJson(listEmployee));
+        assertEquals(jsonExpected, listToJson(listEmployee));
+    }
+
+    @ParameterizedTest
+    @MethodSource("getArgumentsForTest")
+    void testListToJsonByHamcrest(List<Employee> listEmployee, String jsonExpected) {
+        assertThat(jsonExpected, equalTo(listToJson(listEmployee)));
+        assertEquals(jsonExpected, listToJson(listEmployee));
     }
 
     static Stream<Arguments> getArgumentsForTest() {
@@ -59,5 +82,6 @@ class ParsersTest {
                 Arguments.of(listEmployee2, json2)
         );
     }
+
 }
 
