@@ -1,9 +1,6 @@
 package ru.netology.classes;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class ReadWriteFile {
 
@@ -21,7 +18,10 @@ public class ReadWriteFile {
             return reader.lines()
                     .map(x -> x.replace(" ", ""))
                     .reduce(String::concat)
-                    .orElse(null);
+                    .orElse("");
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл не найден: " + fileName);
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
         }

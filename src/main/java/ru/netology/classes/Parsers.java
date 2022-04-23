@@ -9,6 +9,7 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -81,8 +82,8 @@ public class Parsers {
                 result.add(employee);
             }
             return result;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (NullPointerException | ParseException e) {
+            System.out.println(e.getMessage());
         }
         return null;
     }
