@@ -22,9 +22,7 @@ class ParsersTest {
         String json = "[{\"id\":1,\"firstName\":\"John\",\"lastName\":\"Smith\",\"country\":\"USA\",\"age\":25}]";
         List<Employee> expected = new ArrayList<>();
         expected.add(new Employee(1, "John", "Smith", "USA", 25));
-
         List<Employee> result = jsonToList(json);
-
         assertEquals(expected, result);
     }
 
@@ -33,9 +31,7 @@ class ParsersTest {
         String json = "[{\"id\":1,\"firstName\":\"John\",\"lastName\":\"Smith\",\"country\":\"USA\",\"age\":25}]";
         List<Employee> expected = new ArrayList<>();
         expected.add(new Employee(1, "John", "Smith", "USA", 25));
-
         List<Employee> result = jsonToList(json);
-
         assertThat(expected, equalTo(result));
     }
 
@@ -49,7 +45,6 @@ class ParsersTest {
     @MethodSource("getArgumentsForTest")
     void testListToJsonByHamcrest(List<Employee> listEmployee, String jsonExpected) {
         assertThat(jsonExpected, equalTo(listToJson(listEmployee)));
-        assertEquals(jsonExpected, listToJson(listEmployee));
     }
 
     static Stream<Arguments> getArgumentsForTest() {
