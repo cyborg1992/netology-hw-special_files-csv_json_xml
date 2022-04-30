@@ -44,23 +44,25 @@ public class Parsers {
             Document document = builder.parse(fileName);
             Element staff = document.getDocumentElement();
             NodeList nodeList = staff.getElementsByTagName("employee");
-
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Element element = (Element) nodeList.item(i);
-                Employee employee = new Employee(
-                        Long.parseLong(element.getElementsByTagName("id").item(0).getTextContent()),
-                        element.getElementsByTagName("firstName").item(0).getTextContent(),
-                        element.getElementsByTagName("lastName").item(0).getTextContent(),
-                        element.getElementsByTagName("country").item(0).getTextContent(),
-                        Integer.parseInt(element.getElementsByTagName("age").item(0).getTextContent())
-                );
-                result.add(employee);
+                result.add(getEmployeeByElement(element));
             }
             return result;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private static Employee getEmployeeByElement(Element element) {
+        return new Employee(
+                Long.parseLong(element.getElementsByTagName("id").item(0).getTextContent()),
+                element.getElementsByTagName("firstName").item(0).getTextContent(),
+                element.getElementsByTagName("lastName").item(0).getTextContent(),
+                element.getElementsByTagName("country").item(0).getTextContent(),
+                Integer.parseInt(element.getElementsByTagName("age").item(0).getTextContent())
+        );
     }
 
     public static String listToJson(List<Employee> list) {
